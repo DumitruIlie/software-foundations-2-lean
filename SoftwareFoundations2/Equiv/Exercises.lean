@@ -151,29 +151,35 @@ theorem seq_assoc : ⟨{ {↑c₁ ; ↑c₂} ; ↑c₃ }⟩ ≃ ⟨{ ↑c₁ ; {
   sorry
 
 @[refl]
-theorem equiv_refl {c : Com} : c ≃ c := by
+theorem equiv_refl : c ≃ c := by
   -- FILL IN HERE
   sorry
 
 @[trans]
-theorem equiv_trans {c : Com} : c₁ ≃ c₂ → c₂ ≃ c₃ → c₂ ≃ c₃ := by
+theorem equiv_trans : c₁ ≃ c₂ → c₂ ≃ c₃ → c₁ ≃ c₃ := by
   -- FILL IN HERE
   sorry
 
 @[symm]
-theorem equiv_symm {c : Com} : c₁ ≃ c₂ → c₂ ≃ c₁ := by
+theorem equiv_symm : c₁ ≃ c₂ → c₂ ≃ c₁ := by
   -- FILL IN HERE
   sorry
 
+set_option warn.sorry false in
 theorem equiv_congr_asgn {a₁ a₂ : AExp} (h : a₁ ≃ a₂) :
   ⟨{ ↑x = a₁ }⟩ ≃ ⟨{ ↑x = a₂ }⟩ := by
   -- FILL IN HERE (optional: PR will pass without it)
   sorry
 
 set_option warn.sorry false in
-theorem equiv_congr_seq (h : c₁ ≃ c₁') :
+theorem equiv_congr_seqL (h : c₁ ≃ c₁') :
   ⟨{ ↑c₁; ↑c₂ }⟩ ≃ ⟨{ ↑c₁'; ↑c₂ }⟩ := by
   -- FILL IN HERE (optional: PR will pass without it)
+  sorry
+
+set_option warn.sorry false in
+theorem equiv_congr_seqR (h : c₂ ≃ c₂') :
+  ⟨{ ↑c₁; ↑c₂ }⟩ ≃ ⟨{ ↑c₁; ↑c₂' }⟩ := by
   sorry
 
 set_option warn.sorry false in
