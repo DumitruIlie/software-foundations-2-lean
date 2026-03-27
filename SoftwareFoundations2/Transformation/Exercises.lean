@@ -146,7 +146,8 @@ theorem fold_constants_com_sound : Com.fold_constants.sound := by
           · rename_i h
             rw [h, BExp.eval] at bt
             contradiction
-          · apply EIfTrue bt σσ
+          · rw [ih₁] at σσ
+            apply EIfTrue bt σσ
         · rename_i bf σσ
           rw [fold_constants_bexp_sound] at bf
           unfold Com.fold_constants
@@ -155,7 +156,8 @@ theorem fold_constants_com_sound : Com.fold_constants.sound := by
             rw [h, BExp.eval] at bf
             contradiction
           · assumption
-          · apply EIfFalse bf σσ
+          · rw [ih₂] at σσ
+            apply EIfFalse bf σσ
       · intros h
         rw [Com.fold_constants] at h
         split at h
@@ -171,12 +173,14 @@ theorem fold_constants_com_sound : Com.fold_constants.sound := by
           · apply EIfTrue
             · rename_i h _
               rw [fold_constants_bexp_sound, h]
-            · assumption
+            · rw [ih₁]
+              assumption
           · apply EIfFalse
             · rename_i h _
               rw [fold_constants_bexp_sound, h]
-            · assumption
-  | CWhile b c  =>
+            · rw [ih₂]
+              assumption
+  | CWhile b c c_ih =>
       apply Iff.intro
       · intros h
         unfold Com.fold_constants
@@ -210,6 +214,9 @@ theorem fold_constants_com_sound : Com.fold_constants.sound := by
             · rw [←fold_constants_bexp_sound]
               assumption
             · rw [And.right W]
+              rw [And.right W] at c_ih
+              rename_i aux _ _
+              rw [c_ih] at aux
               assumption
             · assumption
           | _ => aesop
@@ -238,7 +245,8 @@ theorem fold_constants_com_sound : Com.fold_constants.sound := by
             simp only [Com.CWhile.injEq] at W
             apply EWhileTrue
             · rw [fold_constants_bexp_sound, And.left W, bt]
-            · rw [And.right W]
+            · rename_i aux _ _
+              rw [←And.right W, ←c_ih] at aux
               assumption
             · assumption
           | EWhileFalse =>

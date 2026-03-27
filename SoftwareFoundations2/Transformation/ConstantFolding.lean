@@ -67,12 +67,12 @@ def Com.fold_constants : CTrans
       match b.fold_constants with
       | BTrue  => c₁
       | BFalse => c₂
-      | b'     => ⟨{ if ↑b' then ↑c₁ else ↑c₂ endif }⟩
+      | b'     => ⟨{ if ↑b' then ↑c₁.fold_constants else ↑c₂.fold_constants endif }⟩
   | CWhile b c  =>
       match b.fold_constants with
       | BTrue  => ⟨{ while btrue do skip od }⟩
       | BFalse => ⟨{ skip }⟩
-      | b'     => ⟨{ while ↑b' do ↑c od }⟩
+      | b'     => ⟨{ while ↑b' do ↑c.fold_constants od }⟩
 
 example : aexp⟨{ (1 + 2) * x }⟩.fold_constants = aexp⟨{ 3 * x }⟩ := rfl
 example : aexp⟨{ x - (0 * 6 + y) }⟩.fold_constants = aexp⟨{ x - (0 + y) }⟩ := rfl
